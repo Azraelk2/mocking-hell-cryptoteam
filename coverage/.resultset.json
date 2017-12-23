@@ -1,0 +1,20 @@
+{
+  "RSpec": {
+    "coverage": {
+      "/home/dat_boi/MockingHell/mocking-hell-cryptoteam/spec/ewallet_spec.rb": [
+        1,
+        null,
+        1,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        null,
+        null
+      ]
+    },
+    "timestamp": 1514073171
+  }
+}
