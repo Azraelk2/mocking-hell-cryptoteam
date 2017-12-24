@@ -1,6 +1,6 @@
 # E-wallet that belongs to user of service
 class Ewallet
-  attr_accessor :id, :user, :name
+  attr_accessor :id, :user, :name, :balance
 
   def initialize(id, user, name)
     @id = id

@@ -12,6 +12,11 @@
         1,
         1,
         null,
+        1,
+        1,
+        1,
+        1,
+        null,
         null
       ],
       "/home/dat_boi/MockingHell/mocking-hell-cryptoteam/lib/ewallet.rb": [
@@ -20,17 +25,17 @@
         1,
         null,
         1,
-        1,
-        1,
-        1,
+        2,
+        2,
+        2,
         null,
         null,
         1,
-        1,
+        2,
         null,
         null
       ]
     },
-    "timestamp": 1514075672
+    "timestamp": 1514076862
   }
 }
