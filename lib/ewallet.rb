@@ -5,10 +5,6 @@ class Ewallet
   def initialize(id, user, name)
     @id = id
     @user = user
-    @name = name
-  end
-
-  def name
-    @name || "#{@user.full_name}'s e-wallet"
+    @name = name || "#{@user.full_name}'s e-wallet"
   end
 end
