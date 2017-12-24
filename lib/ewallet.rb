@@ -6,5 +6,6 @@ class Ewallet
     @id = id
     @user = user
     @name = name || "#{@user.full_name}'s e-wallet"
+    @balance = 0.0
   end
 end
