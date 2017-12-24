@@ -4,7 +4,6 @@ require_relative '../lib/ewallet'
 describe Ewallet do
   context '#initialize' do
     let(:id) { 1 }
-
     let(:name_rand) { random_name }
 
     let(:user1) do
@@ -29,6 +28,11 @@ describe Ewallet do
       expect { ewallet1 }.not_to raise_error
       expect { ewallet2 }.not_to raise_error
       expect { ewallet3 }.not_to raise_error
+    end
+
+    it 'returns E-Wallet type' do
+      allow(ewallet1).to receive(:kind_of?).and_return(Ewallet)
+      expect(ewallet2).to be_a_kind_of(Ewallet)
     end
 
     it 'returns correct id of e-wallet' do
@@ -57,5 +61,9 @@ describe Ewallet do
   end
 
   context '#deposit_money' do
+    let(:id) { 1 }
+    let(:user) { double('Some user') }
+    let(:name) { 'My first e-wallet' }
+    subject(:ewallet) { Ewallet.new(id, user, name) }
   end
 end
