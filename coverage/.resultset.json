@@ -3,18 +3,34 @@
     "coverage": {
       "/home/dat_boi/MockingHell/mocking-hell-cryptoteam/spec/ewallet_spec.rb": [
         1,
+        1,
         null,
         1,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
+        1,
+        1,
+        1,
+        1,
+        1,
+        null,
+        null
+      ],
+      "/home/dat_boi/MockingHell/mocking-hell-cryptoteam/lib/ewallet.rb": [
+        null,
+        1,
+        1,
+        null,
+        1,
+        1,
+        1,
+        1,
+        null,
+        null,
+        1,
+        1,
         null,
         null
       ]
     },
-    "timestamp": 1514073171
+    "timestamp": 1514075672
   }
 }
