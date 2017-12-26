@@ -8,4 +8,11 @@ class Ewallet
     @name = name || "#{@user.full_name}'s e-wallet"
     @balance = 0.0
   end
+
+  def deposit_money(ammount)
+    unless ammount.is_a?(Numeric) && ammount >= 0.0
+      raise ArgumentError, 'Ammount must be a positive integer'
+    end
+    @balance += ammount
+  end
 end

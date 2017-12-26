@@ -60,10 +60,36 @@ describe Ewallet do
     end
   end
 
-  context '#deposit_money' do
+  context '#deposit_money(ammount)' do
     let(:id) { 1 }
     let(:user) { double('Some user') }
     let(:name) { 'My first e-wallet' }
     subject(:ewallet) { Ewallet.new(id, user, name) }
+    let(:ammount) { 100.00 }
+    let(:first_deposit) { ewallet.deposit_money(ammount) }
+    let(:next_deposit) do
+      ewallet.balance = ammount
+      ewallet.deposit_money(ammount)
+    end
+
+    it 'expect not to raise error if ammount is positive numeric' do
+      expect { ewallet.deposit_money(100) }.not_to raise_error
+      expect { ewallet.deposit_money(120.89) }.not_to raise_error
+      expect { ewallet.deposit_money(-200.50) }.to raise_error
+      expect { ewallet.deposit_money('100') }.to raise_error
+      expect { ewallet.deposit_money('number') }.to raise_error
+    end
+
+    it 'expect deposit_money to change only the value of balance' do
+      expect { first_deposit }.to change { ewallet.balance }
+      expect { first_deposit }.not_to change { ewallet.user }
+      expect { first_deposit }.not_to change { ewallet.id }
+      expect { first_deposit }.not_to change { ewallet.name }
+    end
+
+    it 'expect new value of balance to be raised by given ammount' do
+      expect { first_deposit }.to change { ewallet.balance }.from(0).to(ammount)
+      expect { next_deposit }.to change { ewallet.balance }.from(100).to(200)
+    end
   end
 end
