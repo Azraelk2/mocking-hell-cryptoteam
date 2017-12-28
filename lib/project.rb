@@ -1,14 +1,23 @@
 # Project class which allows users to collect money for different things
-class Project
-  attr_accessor :id, :creator, :description, :title, :money_required, :status
+module ProjectStatus
+  ENDED = "Ended"
+  RUNNING = "Running"
+  BACKED = "Backed"
+end
 
-  def initialize(id, creator, description, title, money_required)
+class Project
+  attr_accessor :id, :creator, :description, :title, :money_required, :status, :date_created, :due_date, :date_backed
+
+  def initialize(id, creator, description, title, money_required, due_date)
     @id = id
     @creator = creator
     @description = description || "#{@title} project created by #{@creator.full_name}"
     @title = title
     @money_required = money_required
-    @money_backed = 0.0
-    @status = "Running"
+    @money_backed = 0.0 # Current ammount of backed money
+    @status = ProjectStatus::RUNNING # Whether it's running, backed or ended
+    @due_date = due_date
+    @date_created = Time.now
+    @date_backed = nil # Can be nil because entire project sometimes won't be backed
   end
 end
