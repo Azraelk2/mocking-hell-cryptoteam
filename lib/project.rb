@@ -20,4 +20,7 @@ class Project
     @date_created = Time.now
     @date_backed = nil # Can be nil because entire project sometimes won't be backed
   end
+
+  def add_money(user, ammount)
+  end
 end
