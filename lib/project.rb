@@ -6,7 +6,7 @@ module ProjectStatus
 end
 
 class Project
-  attr_accessor :id, :creator, :description, :title, :money_required, :status, :date_created, :due_date, :date_backed
+  attr_accessor :id, :creator, :description, :title, :money_required, :money_backed, :status, :date_created, :due_date, :date_backed
 
   def initialize(id, creator, description, title, money_required, due_date)
     @id = id
