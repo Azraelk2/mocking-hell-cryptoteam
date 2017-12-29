@@ -81,10 +81,10 @@ describe Ewallet do
     end
 
     it 'expect deposit_money to change only the value of balance' do
-      expect { first_deposit }.to change { ewallet.balance }
-      expect { first_deposit }.not_to change { ewallet.user }
-      expect { first_deposit }.not_to change { ewallet.id }
-      expect { first_deposit }.not_to change { ewallet.name }
+      expect { first_deposit }.to change { ewallet.balance }.from(0)
+      expect { first_deposit }.not_to change { ewallet.user }.from(ewallet.user)
+      expect { first_deposit }.not_to change { ewallet.id }.from(ewallet.id)
+      expect { first_deposit }.not_to change { ewallet.name }.from(ewallet.name)
     end
 
     it 'expect new value of balance to be raised by given ammount' do
