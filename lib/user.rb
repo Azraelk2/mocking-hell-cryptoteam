@@ -1,4 +1,6 @@
 # User class
+require 'date'
+
 class User
   attr_accessor :id, :login, :first_name, :last_name, :pesel, :birthday
 
@@ -19,9 +21,17 @@ class User
   end
 
   def pesel_is_valid(pesel)
+    unless (pesel.to_s).length == 11
+      return false
+    end
+    return true
   end
 
   def is_old_enough(birthday)
+    unless ((Date.today - birthday)/365.25).to_i > 18
+      return false
+    end
+    return true
   end
 
 end
