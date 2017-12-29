@@ -25,4 +25,19 @@ describe Project do
       expect { project.add_money(creator,ammount) }.not_to raise_error
     end
   end
+
+  context '#check_if_backed()' do
+    let(:creator) do
+      double('First User', full_name: 'Joe Doe', \
+                             pesel: 123_456_789, \
+                             birthday_date: '20-03-1997', city: 'Gdansk')
+    end
+    subject(:project1) { Project.new(1, creator, "Test desc", "Test title", "1000", "2017-12-30 22:42:26 +0100") }
+    subject(:project2) { Project.new(2, creator, "Test desc", "Test title", "10000", "2017-12-30 22:42:26 +0100") }
+
+    it 'Expect project to be backed if ammount is sufficient' do
+      expect(project1.check_if_backed).to be true
+      expect(project2.check_if_backed).to be false
+    end
+  end
 end

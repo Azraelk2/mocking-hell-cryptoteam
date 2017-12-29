@@ -27,4 +27,7 @@ class Project
     end
     @money_backed += ammount
   end
+
+  def check_if_backed()
+  end
 end
