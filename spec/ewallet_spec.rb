@@ -92,4 +92,25 @@ describe Ewallet do
       expect { next_deposit }.to change { ewallet.balance }.from(100).to(200)
     end
   end
+
+  context '#withdraw_money(ammout)' do
+    let(:id) { 1 }
+    let(:user) { double('Some user') }
+    let(:name) { 'My first e-wallet' }
+    subject(:ewallet) { Ewallet.new(id, user, name) }
+    let(:ammount) { 100.00 }
+    let(:first_withdraw) { ewallet.withdraw_money(ammount) }
+    let(:next_withdraw) do
+      ewallet.balance = ammount
+      ewallet.withdraw_money(ammount)
+    end
+
+    it 'expect not to raise error if ammount is positive numeric' do
+      expect { ewallet.withdraw_money(100) }.not_to raise_error
+      expect { ewallet.withdraw_money(120.89) }.not_to raise_error
+      expect { ewallet.withdraw_money(-200.50) }.to raise_error
+      expect { ewallet.withdraw_money('100') }.to raise_error
+      expect { ewallet.withdraw_money('number') }.to raise_error
+    end
+  end
 end
