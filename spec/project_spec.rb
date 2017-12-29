@@ -19,5 +19,10 @@ describe Project do
     it 'Expect new value of backe level to be raised by given ammount' do
       expect { project.add_money(creator,ammount) }.to change { project.money_backed }.from(0).to(ammount)
     end
+
+    it 'Expect not to raise error if ammount is positive numeric' do
+      expect { project.add_money(creator,-100) }.to raise_error
+      expect { project.add_money(creator,ammount) }.not_to raise_error
+    end
   end
 end

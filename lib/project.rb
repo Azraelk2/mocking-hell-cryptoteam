@@ -22,5 +22,9 @@ class Project
   end
 
   def add_money(user, ammount)
+    unless ammount.is_a?(Numeric) && ammount >= 0.0
+      raise ArgumentError, "Ammount must be a positive integer"
+    end
+    @money_backed += ammount
   end
 end
