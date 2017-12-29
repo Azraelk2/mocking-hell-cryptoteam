@@ -36,6 +36,8 @@ describe Project do
     subject(:project2) { Project.new(2, creator, "Test desc", "Test title", "10000", "2017-12-30 22:42:26 +0100") }
 
     it 'Expect project to be backed if ammount is sufficient' do
+      project1.add_money(creator,1000)
+      project2.add_money(creator,10)
       expect(project1.check_if_backed).to be true
       expect(project2.check_if_backed).to be false
     end

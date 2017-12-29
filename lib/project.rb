@@ -29,5 +29,10 @@ class Project
   end
 
   def check_if_backed()
+    if @money_backed >= @money_required.to_f
+      true
+    else 
+      false
+    end
   end
 end
