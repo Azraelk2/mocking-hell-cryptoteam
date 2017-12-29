@@ -5,6 +5,8 @@ module ProjectStatus
   BACKED = "Backed"
 end
 
+Transaction = Struct.new(:user, :ammount)
+
 class Project
   attr_accessor :id, :creator, :description, :title, :money_required, :money_backed, :status, :date_created, :due_date, :date_backed
 
@@ -19,6 +21,7 @@ class Project
     @due_date = due_date
     @date_created = Time.now
     @date_backed = nil # Can be nil because entire project sometimes won't be backed
+    @backers = []
   end
 
   def add_money(user, ammount)
@@ -26,6 +29,7 @@ class Project
       raise ArgumentError, "Ammount must be a positive integer"
     end
     @money_backed += ammount
+    @backers.push(Transaction.new(user,ammount))
   end
 
   def check_if_backed()
