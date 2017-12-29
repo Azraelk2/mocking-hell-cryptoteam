@@ -50,15 +50,16 @@ describe Project do
                              birthday_date: '20-03-1997', city: 'Gdansk')
     end
     let(:new_title) {"New Title"}
+    let(:wrong_title) {"aaa"}
     subject(:project) { Project.new(1, creator, "Test desc", "Test title", "1000", "2017-12-30 22:42:26 +0100") }
 
     it 'Expect change project title' do
-      expect(project.change_title_to(new_title)).to change { project.title }
+      expect {project.change_title_to(new_title) }.to change { project.title }
     end
 
     it 'Expect not to raise error if title is long enough' do
-      expect(project.change_title_to("aaa")).to raise_error
-      expect(project.change_title_to(new_title)).not_to raise_error
+      expect {project.change_title_to(wrong_title)}.to raise_error
+      expect {project.change_title_to(new_title)}.not_to raise_error
     end
   end
 

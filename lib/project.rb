@@ -39,4 +39,14 @@ class Project
       false
     end
   end
+
+  def change_title_to(title)
+    unless title.length > 5
+      raise ArgumentError, "Title can't be shorter than 5 characters"
+    end
+    unless title != @title
+      raise ArgumentError, "You replace title by itself"
+    end
+    @title = title
+  end
 end
