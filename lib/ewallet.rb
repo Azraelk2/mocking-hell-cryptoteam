@@ -11,20 +11,17 @@ class Ewallet
 
   def money_error(ammount)
     if ammount.is_a?(Numeric) && ammount >= 0.0
-      false
-    else
       true
+    else
+      raise ArgumentError, 'Ammount must be a positive integer'
     end
   end
 
   def deposit_money(ammount)
-    raise ArgumentError, 'Ammount must be a positive integer' \
-          if money_error(ammount)
-    @balance += ammount
+    @balance += ammount if money_error(ammount)
   end
 
   def withdraw_money(ammount)
-    raise ArgumentError, 'Ammount must be a positive integer' \
-          if money_error(ammount)
+    @balance -= ammount if money_error(ammount)
   end
 end

@@ -99,11 +99,10 @@ describe Ewallet do
     let(:name) { 'My first e-wallet' }
     subject(:ewallet) { Ewallet.new(id, user, name) }
     let(:ammount) { 100.00 }
-    let(:first_withdraw) { ewallet.withdraw_money(ammount) }
-    let(:next_withdraw) do
-      ewallet.balance = ammount
-      ewallet.withdraw_money(ammount)
-    end
+    let(:deposit) { ewallet.deposit_money(ammount) }
+    let(:withdraw) { ewallet.withdraw_money(ammount) }
+    let(:withdraw_two) { ewallet.withdraw_money(ammount) }
+    let(:withdraw_three) { ewallet.withdraw_money(ammount) }
 
     it 'expect not to raise error if ammount is positive numeric' do
       expect { ewallet.withdraw_money(100) }.not_to raise_error
@@ -111,6 +110,25 @@ describe Ewallet do
       expect { ewallet.withdraw_money(-200.50) }.to raise_error
       expect { ewallet.withdraw_money('100') }.to raise_error
       expect { ewallet.withdraw_money('number') }.to raise_error
+    end
+
+    it 'expect withdraw_money to change only the value of balance' do
+      ewallet.balance = 200.00
+      expect { withdraw }.to change { ewallet.balance }.from(200.00)
+      expect { withdraw }.not_to change { ewallet.user }.from(ewallet.user)
+      expect { withdraw }.not_to change { ewallet.id }.from(ewallet.id)
+      expect { withdraw }.not_to change { ewallet.name }.from(ewallet.name)
+    end
+
+    it 'expect new value of balance to decrease by given ammount' do
+      ewallet.balance = 800.00
+
+      expect do
+        withdraw
+        withdraw_two
+      end.to change { ewallet.balance }.from(800).to(600)
+
+      expect { withdraw_three }.to change { ewallet.balance }.from(600).to(500)
     end
   end
 end
