@@ -74,11 +74,11 @@ describe Project do
     subject(:project) { Project.new(1, creator, "Test desc", "Test title", "1000", "2017-12-30 22:42:26 +0100") }
 
     it 'Expect to raise error if date is in past' do
-      expect(project.change_date_to(new_date1)).to raise_error
+      expect { project.change_date_to(new_date1)}.to raise_error
     end
 
     it 'Expect to raise error if new date is sooner than current one' do
-      expect(project.change_date_to(new_date2)).to raise_error
+      expect{ project.change_date_to(new_date2)}.to raise_error
     end
   end
 end
