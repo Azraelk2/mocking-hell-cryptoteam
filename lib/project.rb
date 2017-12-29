@@ -49,4 +49,14 @@ class Project
     end
     @title = title
   end
+
+  def change_date_to(date)
+    unless date > Time.now
+      raise ArgumentError, "Date can't be in the past"
+    end
+    unless date < @due_date
+      raise ArgumentError, "You can't make a project shorter"
+    end
+    @due_date = date
+  end
 end
