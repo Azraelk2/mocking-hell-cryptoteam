@@ -42,4 +42,42 @@ describe Project do
       expect(project2.check_if_backed).to be false
     end
   end
+
+  context '#change_title_to(title)' do
+      let(:creator) do
+      double('First User', full_name: 'Joe Doe', \
+                             pesel: 123_456_789, \
+                             birthday_date: '20-03-1997', city: 'Gdansk')
+    end
+    let(:new_title) {"New Title"}
+    subject(:project) { Project.new(1, creator, "Test desc", "Test title", "1000", "2017-12-30 22:42:26 +0100") }
+
+    it 'Expect change project title' do
+      expect(project.change_title_to(new_title)).to change { project.title }
+    end
+
+    it 'Expect not to raise error if title is long enough' do
+      expect(project.change_title_to("aaa")).to raise_error
+      expect(project.change_title_to(new_title)).not_to raise_error
+    end
+  end
+
+  context '#change_date_to(date)' do
+    let(:creator) do
+    double('First User', full_name: 'Joe Doe', \
+                             pesel: 123_456_789, \
+                             birthday_date: '20-03-1997', city: 'Gdansk')
+    end
+    let(:new_date1) {"2017-12-30 23:42:26 +0100"}
+    let(:new_date2) {"2017-12-21 22:42:26 +0100"}
+    subject(:project) { Project.new(1, creator, "Test desc", "Test title", "1000", "2017-12-30 22:42:26 +0100") }
+
+    it 'Expect to raise error if date is in past' do
+      expect(project.change_date_to(new_date1)).to raise_error
+    end
+
+    it 'Expect to raise error if new date is sooner than current one' do
+      expect(project.change_date_to(new_date2)).to raise_error
+    end
+  end
 end
