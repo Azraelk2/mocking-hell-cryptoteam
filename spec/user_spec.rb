@@ -24,6 +24,21 @@ describe User do
       expect{user3}.to raise_error
       expect{user4}.not_to raise_error
     end
+  end
 
+  context '#pesel_is_valid(pesel)' do
+    it 'Expect proper validation if user provided legit pesel' do
+      #expect(User.pesel_is_valid(1212121212).to be false
+      #expect(User.pesel_is_valid(121212121222).to be false
+      #expect(User.pesel_is_valid(12121212121).to be true
+    end
+  end
+
+  context '#is_old_enough(birthday)' do
+    it 'Expect proper validation if user is at least 18 years old' do
+      #expect(User.is_old_enough(Date.civil(2000,1,1))).to be false
+      #expect(User.is_old_enough(Date.civil(2006,1,1))).to be false
+      #expect(User.is_old_enough(Date.civil(1994,1,1))).to be true
+    end
   end
 end
