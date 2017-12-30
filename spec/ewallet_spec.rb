@@ -80,20 +80,20 @@ describe Ewallet do
 
   context '.balance_error(ammount)' do
     it 'raise error when passed ammount is invalid' do
-      Ewallet.any_instance.stub(:balance).and_return(400.00)
-      # expect { o.balance_error(220.25) }.not_to raise_error
-      # expect { o.balance_error(2000) }.to raise_error
-      # expect { o.balance_error(400.67) }.to raise_error
-    end
+      allow(Ewallet).to receive(:balance_error).and_call_original
+      Ewallet.instance_variable_set(:@balance, 300)
 
-    let(:bigger_ammount) { 220.25 }
+      expect { Ewallet.balance_error(220.25) }.not_to raise_error
+      expect { Ewallet.balance_error(2000) }.to raise_error
+      expect { Ewallet.balance_error(400.67) }.to raise_error
+    end
 
     it 'return true if ammount is valid' do
       allow(Ewallet).to receive(:balance_error).and_call_original
       Ewallet.instance_variable_set(:@balance, 300)
 
-      expect(Ewallet.itself.balance_error(bigger_ammount)).to eq(true)
-      # expect(Ewallet.itself.balance_error(10)).to eq(true)
+      expect(Ewallet.itself.balance_error(220.25)).to eq(true)
+      expect(Ewallet.itself.balance_error(10)).to eq(true)
     end
   end
 
