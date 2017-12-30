@@ -1,6 +1,6 @@
 require 'spec_helper'
-require_relative '../lib/user'
 require 'date'
+require_relative '../lib/user'
 
 describe User do
   context '#initialize' do
@@ -26,22 +26,23 @@ describe User do
     end
   end
 
-  context '#pesel_is_valid(pesel)' do
+  context '.pesel_is_valid(pesel)' do
+    let(:pesel_right) { 12121212121 }
+    let(:pesel_wrong) { 1212121212122 }
+
     it 'Expect proper validation if user provided legit pesel' do
-      user_double = double
-      allow(user_double).to receive(:pesel_is_valid).and_return(false, true)
-      expect(user_double.pesel_is_valid(1212121212)).to eq(false)
-      # expect(user_double.pesel_is_valid(1212121212223)).to eq(true) # tu jest jakiś błąd! powinno być false
-      expect(user_double.pesel_is_valid(12121212121)).to eq(true)
-      # expect(user_double.pesel_is_valid(1212)).to eq(false) # i tutaj też trzeba wtedy resetować double
+      allow(User).to receive(:pesel_is_valid).and_call_original
+      expect(User.itself.pesel_is_valid(pesel_right)).to eq(true) # wpisz sobie false i zobacz
+      expect(User.itself.pesel_is_valid(pesel_wrong)).to eq(false)
     end
   end
 
-  context '#is_old_enough(birthday)' do
+  context '.is_old_enough(birthday)' do
     it 'Expect proper validation if user is at least 18 years old' do
-      #expect(User.is_old_enough(Date.civil(2000,1,1))).to be false
-      #expect(User.is_old_enough(Date.civil(2006,1,1))).to be false
-      #expect(User.is_old_enough(Date.civil(1994,1,1))).to be true
+      allow(User).to receive(:is_old_enough).and_call_original
+      expect(User.is_old_enough(Date.civil(2000,1,1))).to eq(false)
+      expect(User.is_old_enough(Date.civil(2006,1,1))).to eq(false)
+      expect(User.is_old_enough(Date.civil(1994,1,1))).to eq(true)
     end
   end
 end

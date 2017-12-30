@@ -9,18 +9,17 @@ class User
     @login = login
     @first_name = first_name
     @last_name = last_name
-    unless pesel_is_valid(pesel)
+    unless User.pesel_is_valid(pesel)
       raise ArgumentError, "Pesel is invalid"
     end
     @pesel = pesel
-
-    unless is_old_enough(birthday)
+    unless User.is_old_enough(birthday)
       raise ArgumentError, "User is too young"
     end
     @birthday = birthday
   end
 
-  def pesel_is_valid(pesel)
+  def self.pesel_is_valid(pesel)
     if (pesel.to_s).length != 11
       return false
     else
@@ -28,11 +27,10 @@ class User
     end
   end
 
-  def is_old_enough(birthday)
+  def self.is_old_enough(birthday)
     unless ((Date.today - birthday)/365.25).to_i > 18
       return false
     end
     return true
   end
-
 end
