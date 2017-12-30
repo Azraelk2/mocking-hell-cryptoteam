@@ -15,11 +15,17 @@ class Ewallet
     true
   end
 
+  def balance_error(ammount)
+    raise ArgumentError, 'You do not have that much money in wallet' \
+          if ammount > @balance
+    true
+  end
+
   def deposit_money(ammount)
     @balance += ammount if money_error(ammount)
   end
 
   def withdraw_money(ammount)
-    @balance -= ammount if money_error(ammount)
+    @balance -= ammount if money_error(ammount) && balance_error(ammount)
   end
 end
