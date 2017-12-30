@@ -90,7 +90,7 @@ describe Ewallet do
 
     it 'return true if ammount is valid' do
       allow(Ewallet).to receive(:balance_error).and_call_original
-      Ewallet.balance_error.stub(balance: 500)
+      Ewallet.instance_variable_set(:@balance, 300)
 
       expect(Ewallet.itself.balance_error(bigger_ammount)).to eq(true)
       # expect(Ewallet.itself.balance_error(10)).to eq(true)
