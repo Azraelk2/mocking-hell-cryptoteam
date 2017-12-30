@@ -103,6 +103,7 @@ describe Ewallet do
     let(:withdraw) { ewallet.withdraw_money(ammount) }
     let(:withdraw_two) { ewallet.withdraw_money(ammount) }
     let(:withdraw_three) { ewallet.withdraw_money(ammount) }
+    let(:small_withdraw) { ewallet.withdraw_money(25.25) }
 
     it 'expect not to raise error if ammount is positive numeric' do
       expect { ewallet.withdraw_money(100) }.not_to raise_error
@@ -129,6 +130,13 @@ describe Ewallet do
       end.to change { ewallet.balance }.from(800).to(600)
 
       expect { withdraw_three }.to change { ewallet.balance }.from(600).to(500)
+    end
+
+    it 'can not withdraw money if ammout is bigger than balance' do
+      ewallet.balance = 50.00
+
+      expect { withdraw }.to raise_error
+      expect { small_withdraw }.not_to raise_error
     end
   end
 end
