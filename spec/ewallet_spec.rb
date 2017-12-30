@@ -60,6 +60,43 @@ describe Ewallet do
     end
   end
 
+  context '.money_error(ammount)' do
+    it 'raise error when passed ammount is invalid' do
+      allow(Ewallet).to receive(:money_error).and_call_original
+
+      expect { Ewallet.money_error(220.25) }.not_to raise_error
+      expect { Ewallet.money_error(-200.50) }.to raise_error
+      expect { Ewallet.money_error('100') }.to raise_error
+      expect { Ewallet.money_error('number') }.to raise_error
+    end
+
+    it 'return true if ammount is valid' do
+      allow(Ewallet).to receive(:money_error).and_call_original
+
+      expect(Ewallet.money_error(220.25)).to eq(true)
+      expect(Ewallet.money_error(1000)).to eq(true)
+    end
+  end
+
+  context '.balance_error(ammount)' do
+    it 'raise error when passed ammount is invalid' do
+      Ewallet.any_instance.stub(:balance).and_return(400.00)
+      # expect { o.balance_error(220.25) }.not_to raise_error
+      # expect { o.balance_error(2000) }.to raise_error
+      # expect { o.balance_error(400.67) }.to raise_error
+    end
+
+    let(:bigger_ammount) { 220.25 }
+
+    it 'return true if ammount is valid' do
+      allow(Ewallet).to receive(:balance_error).and_call_original
+      Ewallet.balance_error.stub(balance: 500)
+
+      expect(Ewallet.itself.balance_error(bigger_ammount)).to eq(true)
+      # expect(Ewallet.itself.balance_error(10)).to eq(true)
+    end
+  end
+
   context '#deposit_money(ammount)' do
     let(:id) { 1 }
     let(:user) { double('Some user') }
@@ -105,17 +142,28 @@ describe Ewallet do
     let(:withdraw_three) { ewallet.withdraw_money(ammount) }
     let(:small_withdraw) { ewallet.withdraw_money(25.25) }
 
-    it 'expect not to raise error if ammount is positive numeric' do
+    it 'expect withdraw to change balance if ammount is a positive numeric' do
+      allow(Ewallet).to receive(:money_error).and_return(true, true, false)
+      allow(Ewallet).to receive(:balance_error).and_return(true)
       ewallet.balance = 1000.00
-      expect { ewallet.withdraw_money(100) }.not_to raise_error
-      expect { ewallet.withdraw_money(120.89) }.not_to raise_error
-      expect { ewallet.withdraw_money(-200.50) }.to raise_error
-      expect { ewallet.withdraw_money('100') }.to raise_error
-      expect { ewallet.withdraw_money('number') }.to raise_error
+
+      expect { ewallet.withdraw_money(100) }.to change \
+             { ewallet.balance }.from(ewallet.balance)
+      expect { ewallet.withdraw_money(120.89) }.to change \
+             { ewallet.balance }.from(ewallet.balance)
+      expect { ewallet.withdraw_money(-20) }.not_to change \
+             { ewallet.balance }.from(ewallet.balance)
+      expect { ewallet.withdraw_money('100') }.not_to change \
+             { ewallet.balance }.from(ewallet.balance)
+      expect { ewallet.withdraw_money('number') }.not_to change \
+             { ewallet.balance }.from(ewallet.balance)
     end
 
     it 'expect withdraw_money to change only the value of balance' do
+      allow(Ewallet).to receive(:money_error).and_return(true)
+      allow(Ewallet).to receive(:balance_error).and_return(true)
       ewallet.balance = 1000.00
+
       expect { withdraw }.to change { ewallet.balance }.from(1000.00)
       expect { withdraw }.not_to change { ewallet.user }.from(ewallet.user)
       expect { withdraw }.not_to change { ewallet.id }.from(ewallet.id)
@@ -123,6 +171,8 @@ describe Ewallet do
     end
 
     it 'expect new value of balance to decrease by given ammount' do
+      allow(Ewallet).to receive(:money_error).and_return(true)
+      allow(Ewallet).to receive(:balance_error).and_return(true)
       ewallet.balance = 800.00
 
       expect do
@@ -134,10 +184,12 @@ describe Ewallet do
     end
 
     it 'can not withdraw money if ammout is bigger than balance' do
+      allow(Ewallet).to receive(:money_error).and_return(true, true)
+      allow(Ewallet).to receive(:balance_error).and_return(false, true)
       ewallet.balance = 50.00
 
-      expect { withdraw }.to raise_error
-      expect { small_withdraw }.not_to raise_error
+      expect { withdraw }.not_to change { ewallet.balance }.from(50.00)
+      expect { small_withdraw }.to change { ewallet.balance }.from(50.00)
     end
   end
 end

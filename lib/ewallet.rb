@@ -9,23 +9,24 @@ class Ewallet
     @balance = 0.0
   end
 
-  def money_error(ammount)
+  def self.money_error(ammount)
     raise ArgumentError, 'Ammount must be a positive integer' \
           unless ammount.is_a?(Numeric) && ammount >= 0.0
     true
   end
 
-  def balance_error(ammount)
+  def self.balance_error(ammount)
     raise ArgumentError, 'You do not have that much money in wallet' \
           if ammount > @balance
     true
   end
 
   def deposit_money(ammount)
-    @balance += ammount if money_error(ammount)
+    @balance += ammount if Ewallet.money_error(ammount)
   end
 
   def withdraw_money(ammount)
-    @balance -= ammount if money_error(ammount) && balance_error(ammount)
+    @balance -= ammount if Ewallet.money_error(ammount) && \
+                           Ewallet.balance_error(ammount)
   end
 end
