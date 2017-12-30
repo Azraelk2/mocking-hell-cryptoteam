@@ -106,6 +106,7 @@ describe Ewallet do
     let(:small_withdraw) { ewallet.withdraw_money(25.25) }
 
     it 'expect not to raise error if ammount is positive numeric' do
+      ewallet.balance = 1000.00
       expect { ewallet.withdraw_money(100) }.not_to raise_error
       expect { ewallet.withdraw_money(120.89) }.not_to raise_error
       expect { ewallet.withdraw_money(-200.50) }.to raise_error
@@ -114,8 +115,8 @@ describe Ewallet do
     end
 
     it 'expect withdraw_money to change only the value of balance' do
-      ewallet.balance = 200.00
-      expect { withdraw }.to change { ewallet.balance }.from(200.00)
+      ewallet.balance = 1000.00
+      expect { withdraw }.to change { ewallet.balance }.from(1000.00)
       expect { withdraw }.not_to change { ewallet.user }.from(ewallet.user)
       expect { withdraw }.not_to change { ewallet.id }.from(ewallet.id)
       expect { withdraw }.not_to change { ewallet.name }.from(ewallet.name)
