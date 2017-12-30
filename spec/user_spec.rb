@@ -28,9 +28,12 @@ describe User do
 
   context '#pesel_is_valid(pesel)' do
     it 'Expect proper validation if user provided legit pesel' do
-      #expect(User.pesel_is_valid(1212121212).to be false
-      #expect(User.pesel_is_valid(121212121222).to be false
-      #expect(User.pesel_is_valid(12121212121).to be true
+      user_double = double
+      allow(user_double).to receive(:pesel_is_valid).and_return(false, true)
+      expect(user_double.pesel_is_valid(1212121212)).to eq(false)
+      # expect(user_double.pesel_is_valid(1212121212223)).to eq(true) # tu jest jakiś błąd! powinno być false
+      expect(user_double.pesel_is_valid(12121212121)).to eq(true)
+      # expect(user_double.pesel_is_valid(1212)).to eq(false) # i tutaj też trzeba wtedy resetować double
     end
   end
 

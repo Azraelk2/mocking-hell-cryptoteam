@@ -21,10 +21,11 @@ class User
   end
 
   def pesel_is_valid(pesel)
-    unless (pesel.to_s).length == 11
+    if (pesel.to_s).length != 11
       return false
+    else
+      return true
     end
-    return true
   end
 
   def is_old_enough(birthday)
